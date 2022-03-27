@@ -62,12 +62,13 @@ class BookListTile extends StatelessWidget {
         title: Text(booktitle),
         subtitle: Text(bookauthor),
         onTap: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => bookDetails(book: Books[index]),
-          //   ),
-          // );
+         Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  bookDetails(book: Book(booktitle, bookauthor)),
+            ),
+          );
         },
       ),
     );
