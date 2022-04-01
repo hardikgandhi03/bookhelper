@@ -52,6 +52,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/bookcover1.jpg
+    - assets/images/book1.jpg
     - assets/images/profileimg.jpeg
 
 
