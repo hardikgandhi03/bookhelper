@@ -22,8 +22,7 @@ class _CurrentlyReadingState extends State<CurrentlyReading> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Text("Book Helper"),
+        title: Text("Currently Reading"),
         backgroundColor: Color(0xff2855ae),
         actions: [],
       ),

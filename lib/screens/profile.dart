@@ -1,3 +1,5 @@
+import 'package:bookhelper/screens/login/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class profileScreen extends StatefulWidget {
@@ -8,9 +10,21 @@ class profileScreen extends StatefulWidget {
 }
 
 class _profileScreenState extends State<profileScreen> {
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => loginScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   title: Text("Profile"),
+      //   backgroundColor: Color(0xff2855ae),
+      //   actions: [],
+      // ),
       body: Container(
         color: Colors.blue.shade200,
         child: Column(children: [
@@ -71,6 +85,15 @@ class _profileScreenState extends State<profileScreen> {
                 )),
                 height: 50,
               ),
+              SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  logout(context);
+                },
+                child: Container(color: Colors.blue, child: Text("LogOut")),
+              )
             ]),
           )
         ]),

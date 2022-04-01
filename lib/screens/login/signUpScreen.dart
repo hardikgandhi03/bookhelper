@@ -114,19 +114,18 @@
 //   }
 // }
 
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-//import 'package:google_fonts/google_fonts.dart';
 
 String email = '';
 String pass = '';
 String cpass = '';
 
 class SignUpScreen extends StatelessWidget {
-  //const SignUpScreen({Key? key}) : super(key: key);
+  // SignUpScreen({Key? key}) : super(key: key);
 
-  //FirebaseAuth authc = FirebaseAuth.instance;
+  FirebaseAuth authc = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -137,11 +136,11 @@ class SignUpScreen extends StatelessWidget {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text("Password not mached.")));
         } else {
-          // var user = await authc.createUserWithEmailAndPassword(
-          //   email: email,
-          //   password: pass,
-          //);
-          // print(user);
+          var user = await authc.createUserWithEmailAndPassword(
+            email: email,
+            password: pass,
+          );
+          print(user);
 
           if (false) {
             Navigator.pushNamed(context, "home");
@@ -214,17 +213,6 @@ class SignUpScreen extends StatelessWidget {
                 ),
 
                 SizedBox(height: 10),
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //     children: [
-                //       Option(icon: Icon(Icons.link, size: 55)),
-                //       Option(icon: Icon(Icons.mail_outline, size: 55)),
-                //       Option(icon: Icon(Icons.facebook_sharp, size: 55)),
-                //     ],
-                //   ),
-                // )
               ],
             ),
           ),

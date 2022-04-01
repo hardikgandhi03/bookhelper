@@ -110,7 +110,7 @@
 
 import 'package:bookhelper/screens/homescreen.dart';
 import 'package:bookhelper/screens/login/signUpScreen.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -119,22 +119,28 @@ String pass = '';
 
 class loginScreen extends StatelessWidget {
   //const SignUp({Key? key}) : super(key: key);
-  //FirebaseAuth authc = FirebaseAuth.instance;
+  FirebaseAuth authc = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     _register() async {
       print(email + pass);
       try {
-        // var usr = await authc.signInWithEmailAndPassword(
-        //     email: email, password: pass);
-        // print("hello");
-        // print(usr);
-        // print("hello");
+        var usr = await authc.signInWithEmailAndPassword(
+            email: email, password: pass);
+        print("hello");
+        print(usr);
+        print("hello");
 
-        // if (usr != null) {
-        //   Navigator.pushNamed(context, "home");
-        // }
+        if (usr != null) {
+          //Navigator.pushNamed(context, "login");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Home(),
+            ),
+          );
+        }
       } catch (e) {
         final snack = SnackBar(
           content: Text("Error: " + '$e'),
@@ -172,13 +178,7 @@ class loginScreen extends StatelessWidget {
                 Details(),
                 SizedBox(height: 50),
                 ElevatedButton(
-                  //onPressed: _register,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Home()),
-                    );
-                  },
+                  onPressed: _register,
                   child: Text("Login"),
                   style: ElevatedButton.styleFrom(
                       fixedSize: Size(300, 60), primary: Colors.black),
@@ -228,50 +228,50 @@ class Details extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 10),
-          // TextField(
-          //   obscureText: false,
-          //   keyboardType: TextInputType.emailAddress,
-          //   onChanged: (evalue) {
-          //     email = evalue;
-          //   },
-          //   decoration: InputDecoration(
-          //       isDense: true,
-          //       prefixIcon: Padding(
-          //         padding: const EdgeInsets.only(right: 11.0, left: 20),
-          //         child: Icon(Icons.email_outlined),
-          //       ),
-          //       hintText: "Email",
-          //       //hintStyle: GoogleFonts.nunito(color: Colors.grey, fontSize: 21),
-          //       border: OutlineInputBorder(
-          //           borderRadius: BorderRadius.circular(50))),
-          // ),
-          TextFormField(
-              autofocus: false,
-              controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return ("Please Enter Your Email");
-                }
-                // reg expression for email validation
-                if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-                    .hasMatch(value)) {
-                  return ("Please Enter a valid email");
-                }
-                return null;
-              },
-              onSaved: (value) {
-                emailController.text = value!;
-              },
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.mail),
-                contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                hintText: "Email",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+          TextField(
+            obscureText: false,
+            keyboardType: TextInputType.emailAddress,
+            onChanged: (evalue) {
+              email = evalue;
+            },
+            decoration: InputDecoration(
+                isDense: true,
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(right: 11.0, left: 20),
+                  child: Icon(Icons.email_outlined),
                 ),
-              )),
+                hintText: "Email",
+                //hintStyle: GoogleFonts.nunito(color: Colors.grey, fontSize: 21),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50))),
+          ),
+          // TextFormField(
+          //     autofocus: false,
+          //     controller: emailController,
+          //     keyboardType: TextInputType.emailAddress,
+          //     validator: (value) {
+          //       if (value!.isEmpty) {
+          //         return ("Please Enter Your Email");
+          //       }
+          //       // reg expression for email validation
+          //       if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+          //           .hasMatch(value)) {
+          //         return ("Please Enter a valid email");
+          //       }
+          //       return null;
+          //     },
+          //     onSaved: (value) {
+          //       emailController.text = value!;
+          //     },
+          //     textInputAction: TextInputAction.next,
+          //     decoration: InputDecoration(
+          //       prefixIcon: Icon(Icons.mail),
+          //       contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          //       hintText: "Email",
+          //       border: OutlineInputBorder(
+          //         borderRadius: BorderRadius.circular(10),
+          //       ),
+          //     )),
           SizedBox(height: 10),
           TextField(
             obscureText: false,
