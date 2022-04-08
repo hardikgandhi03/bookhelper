@@ -1,4 +1,5 @@
 import 'package:bookhelper/screens/booklist.dart';
+import 'package:bookhelper/screens/explorebooks.dart';
 import 'package:bookhelper/screens/homepage.dart';
 import 'package:bookhelper/screens/profile.dart';
 import 'package:bookhelper/screens/chart.dart';
@@ -16,7 +17,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _page = 2;
   List page_screens = [
-    booklist(),
+    //booklist(),
+    DatafromAPI(),
     friendList(),
     HomePage(),
     profileScreen(),

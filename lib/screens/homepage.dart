@@ -69,12 +69,12 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CurrentlyReading(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => CurrentlyReading(),
+              //   ),
+              // );
             },
           ),
           GestureDetector(
