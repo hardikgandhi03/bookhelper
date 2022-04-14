@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
   int _page = 2;
   List page_screens = [
     //booklist(),
-    DatafromAPI(),
+    //DatafromAPI(),
     friendList(),
     HomePage(),
     profileScreen(),
