@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
   int _page = 2;
   List page_screens = [
     //booklist(),
-    //DatafromAPI(),
+    DatafromAPI(),
     friendList(),
     HomePage(),
     profileScreen(),
@@ -27,13 +27,15 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Text("Book Helper"),
-        backgroundColor: Color(0xff2855ae),
-        actions: [],
-      ),
+      appBar: _page == 2
+          ? AppBar(
+              elevation: 0,
+              automaticallyImplyLeading: false,
+              title: Text("Book Helper"),
+              backgroundColor: Color(0xff2855ae),
+              actions: [],
+            )
+          : null,
       body: page_screens[_page],
       bottomNavigationBar: CurvedNavigationBar(
         height: 55.0,
