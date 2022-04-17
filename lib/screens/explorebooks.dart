@@ -1,5 +1,9 @@
 import 'dart:convert';
+import 'package:bookhelper/books.dart';
+import 'package:bookhelper/detailsOfBooks.dart';
 import 'package:bookhelper/screens/booklist.dart';
+import 'package:bookhelper/screens/chart.dart';
+import 'package:bookhelper/screens/search.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -31,18 +35,18 @@ class _DatafromAPIState extends State<DatafromAPI> {
 
       for (var b in jsonData) {
         Books book = Books(
+          //id: b['Id'],
           bookName: b['Name'],
           bookAuthorName: b['Authors'],
-          // pageNumber: b['pagesNumber'],
-          // star1: b['RatingDist1'],
-          // star2: b['RatingDist2'],
-          // star3: b['RatingDist3'],
-          // star4: b['RatingDist4'],
-          // star5: b['RatingDist5'],
+          star1: b['RatingDist1'],
+          star2: b['RatingDist2'],
+          star3: b['RatingDist3'],
+          star4: b['RatingDist4'],
+          star5: b['RatingDist5'],
         );
         count++;
-        if (count == 10) {
-          print('breaking the list at 10 books');
+        if (count == 100) {
+          print('breaking the list at 100 books');
           break;
         } else {
           books.add(book);
@@ -64,7 +68,16 @@ class _DatafromAPIState extends State<DatafromAPI> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Explore Books'),
+          elevation: 0,
+          title: Text("Explore Books"),
+          backgroundColor: Color(0xff2855ae),
+          actions: [
+            // Navigate to the Search Screen
+            IconButton(
+                onPressed: () => Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => searchScreen())),
+                icon: Icon(Icons.search))
+          ],
         ),
         backgroundColor: Colors.blue.shade200,
         body: Container(
@@ -85,9 +98,36 @@ class _DatafromAPIState extends State<DatafromAPI> {
                   itemCount: snapshot.data?.length,
                   //itemCount: 100,
                   itemBuilder: (context, i) {
-                    return ListTile(
-                      title: Text(snapshot.data?[i].bookName),
-                      subtitle: Text(snapshot.data?[i].bookAuthorName),
+                    return Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black, width: 1),
+                        //borderRadius: BorderRadius.circular(12),
+                        color: Colors.blue.shade200,
+                      ),
+                      child: ListTile(
+                        title: Text(snapshot.data?[i].bookName),
+                        subtitle: Text(snapshot.data?[i].bookAuthorName),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => bookDetails(
+                                book: Books(
+                                    //id: snapshot.data?[i].id,
+                                    bookName: snapshot.data?[i].bookName,
+                                    bookAuthorName:
+                                        snapshot.data?[i].bookAuthorName,
+                                    star1: snapshot.data?[i].star1,
+                                    star2: snapshot.data?[i].star2,
+                                    star3: snapshot.data?[i].star3,
+                                    star4: snapshot.data?[i].star4,
+                                    star5: snapshot.data?[i].star5),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     );
                   },
                 );
@@ -97,61 +137,3 @@ class _DatafromAPIState extends State<DatafromAPI> {
         ));
   }
 }
-
-class Books {
-  final String? bookName, bookAuthorName;
-  // pageNumber,
-  // star1,
-  // star2,
-  // star3,
-  // star4,
-  // star5;
-
-  Books({
-    required this.bookName,
-    required this.bookAuthorName,
-    // required this.pageNumber,
-    // required this.star1,
-    // required this.star2,
-    // required this.star3,
-    // required this.star4,
-    // required this.star5,
-  });
-}
-
-// class Books {
-//   int id;
-//   String bookName;
-//   String bookAuthorName;
-//   String publisher;
-//   int star1;
-//   int star2;
-//   int star3;
-//   int star4;
-//   int star5;
-
-//   Books.fromJson(Map json)
-//       : id = json['Id'],
-//         bookName = json['Name'],
-//         bookAuthorName = json['Authors'],
-//         publisher = json['Publisher'],
-//         star1 = json['RatingDist1'],
-//         star2 = json['RatingDist2'],
-//         star3 = json['RatingDist3'],
-//         star4 = json['RatingDist4'],
-//         star5 = json['RatingDist5'];
-
-//   Map toJson() {
-//     return {
-//       'id': id,
-//       'name': bookName,
-//       'Authors': bookAuthorName,
-//       'Publisher': publisher,
-//       'RatingDist1': star1,
-//       'RatingDist2': star2,
-//       'RatingDist3': star3,
-//       'RatingDist4': star4,
-//       'RatingDist5': star5,
-//     };
-//   }
-// }

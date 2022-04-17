@@ -20,6 +20,12 @@ class friendList extends StatelessWidget {
       ),
     );
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        title: Text("Friends List"),
+        backgroundColor: Color(0xff2855ae),
+        actions: [],
+      ),
       body: ListView.builder(
         itemCount: Friends.length,
         itemBuilder: (context, index) {
