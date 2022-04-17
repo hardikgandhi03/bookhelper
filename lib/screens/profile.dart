@@ -18,86 +18,76 @@ class _profileScreenState extends State<profileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //   elevation: 0,
-        //   title: Text("Profile"),
-        //   backgroundColor: Color(0xff2855ae),
-        //   actions: [],
-        // ),
+        appBar: AppBar(
+          elevation: 0,
+          title: Text("Profile"),
+          backgroundColor: Color(0xff2855ae),
+          actions: [],
+        ),
         body: Container(
           color: Colors.blue.shade200,
-          child: Column(children: [
-            // Container(
-            //   //  color: Colors.black,
-            //   child: ListTile(
-            //     trailing: Icon(
-            //       Icons.edit,
-            //       size: 30.0,
-            //     ),
-            //   ),
-            // ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                vertical: 20,
-              ),
-              child: Center(
+          child: Column(
+            children: [
+              // Container(
+              //   //  color: Colors.black,
+              //   child: ListTile(
+              //     trailing: Icon(
+              //       Icons.edit,
+              //       size: 30.0,
+              //     ),
+              //   ),
+              // ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 20,
+                ),
+                child: Center(
+                    child: CircleAvatar(
+                  radius: 85,
+                  backgroundColor: Color.fromARGB(255, 0, 0, 0),
                   child: CircleAvatar(
-                radius: 85,
-                backgroundColor: Color.fromARGB(255, 0, 0, 0),
-                child: CircleAvatar(
-                  radius: 80,
-                  backgroundImage: AssetImage('assets/images/profileimg.jpeg'),
+                    radius: 80,
+                    backgroundImage:
+                        AssetImage('assets/images/profileimg.jpeg'),
+                  ),
+                )),
+              ),
+              Container(
+                //color: Colors.black,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black, width: 1),
+                        //borderRadius: BorderRadius.circular(12),
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      ),
+                      padding: EdgeInsets.all(40.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Email : ",
+                            style: TextStyle(fontSize: 25),
+                          ),
+                          Text(
+                            user.email!,
+                            style: TextStyle(fontSize: 25),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              )),
-            ),
-            Container(
-              //color: Colors.black,
-              child: Column(children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  color: Colors.white54,
-                  width: double.infinity,
-                  child: Center(
-                      child: Text(
-                    "Name : Hardik Gandhi",
-                    style: TextStyle(fontSize: 25),
-                  )),
-                  height: 50,
-                ),
-              ]),
-            ),
-            Container(
-              //color: Colors.black,
-              child: Column(children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  color: Colors.white54,
-                  width: double.infinity,
-                  child: Center(
-                      child: Text(
-                    "email: abc@gmail.com",
-                    style: TextStyle(fontSize: 25),
-                  )),
-                  height: 50,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    logout(context);
-                  },
-                  child: Container(color: Colors.blue, child: Text("LogOut")),
-                )
-              ]),
-            )
-          ]),
+              ),
+            ],
+          ),
         ),
       ),
     );

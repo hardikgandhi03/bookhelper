@@ -48,10 +48,10 @@ class searchScreenState extends State<searchScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          elevation: 0,
           title: Text("Search a Book"),
           backgroundColor: Color(0xff2855ae),
         ),
+        backgroundColor: Colors.blue.shade200,
         body: Column(
           children: <Widget>[
             buildSearch(),
