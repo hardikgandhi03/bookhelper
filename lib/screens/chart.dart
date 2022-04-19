@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bookhelper/screens/explorebooks.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
@@ -6,12 +8,17 @@ import 'package:flutter/material.dart';
 class chartDisplay extends StatefulWidget {
   chartDisplay(
       {Key? key,
-      required String star2,
-      required String star1,
-      required String star3,
-      required String star4,
-      required String star5})
+      required this.star1,
+      required this.star2,
+      required this.star3,
+      required this.star4,
+      required this.star5})
       : super(key: key);
+  final String star1;
+  final String star2;
+  final String star3;
+  final String star4;
+  final String star5;
 
   @override
   _chartDisplayState createState() => _chartDisplayState();
@@ -31,6 +38,7 @@ class _chartDisplayState extends State<chartDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    log(int.parse(widget.star5.substring(2)).toString());
     return SafeArea(
       child: Container(
         //color: Colors.blue.shade200,
@@ -51,14 +59,19 @@ class _chartDisplayState extends State<chartDisplay> {
                   series: <ChartSeries>[
                     BarSeries<Ratings, String>(
                         name: 'count',
-                        dataSource: _chartData,
-                        // dataSource: [
-                        //   Ratings('5 star', 36),
-                        //   Ratings('4 star', 24),
-                        //   Ratings('3 star', 29),
-                        //   Ratings('2 star', 23),
-                        //   Ratings('1 star', 14),
-                        // ],
+                        // dataSource: _chartData,
+                        dataSource: [
+                          Ratings(
+                              '5 star', int.parse(widget.star5.substring(2))),
+                          Ratings(
+                              '4 star', int.parse(widget.star4.substring(2))),
+                          Ratings(
+                              '3 star', int.parse(widget.star3.substring(2))),
+                          Ratings(
+                              '2 star', int.parse(widget.star2.substring(2))),
+                          Ratings(
+                              '1 star', int.parse(widget.star1.substring(2))),
+                        ],
                         xValueMapper: (Ratings count, _) => count.string,
                         yValueMapper: (Ratings count, _) => count.count,
                         dataLabelSettings: DataLabelSettings(isVisible: true),

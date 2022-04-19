@@ -83,6 +83,10 @@ class _profileScreenState extends State<profileScreen> {
                         ],
                       ),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(onPressed: _signOut, child: Text("SignOut")),
                   ],
                 ),
               ),
@@ -91,5 +95,10 @@ class _profileScreenState extends State<profileScreen> {
         ),
       ),
     );
+  }
+
+  Future _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    return loginScreen();
   }
 }
