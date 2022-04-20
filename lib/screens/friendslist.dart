@@ -21,6 +21,7 @@ class friendList extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         title: Text("Friends List"),
         backgroundColor: Color(0xff2855ae),

@@ -68,6 +68,7 @@ class _DatafromAPIState extends State<DatafromAPI> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           elevation: 0,
           title: Text("Explore Books"),
           backgroundColor: Color(0xff2855ae),

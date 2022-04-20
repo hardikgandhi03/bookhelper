@@ -23,6 +23,7 @@ class _profileScreenState extends State<profileScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           elevation: 0,
           title: Text("Profile"),
           backgroundColor: Color(0xff2855ae),
@@ -69,16 +70,18 @@ class _profileScreenState extends State<profileScreen> {
                         //borderRadius: BorderRadius.circular(12),
                         color: Color.fromARGB(255, 255, 255, 255),
                       ),
-                      padding: EdgeInsets.all(40.0),
+                      padding: EdgeInsets.all(10.0),
                       child: Row(
                         children: [
                           Text(
                             "Email : ",
-                            style: TextStyle(fontSize: 25),
+                            style: TextStyle(fontSize: 18),
                           ),
-                          Text(
-                            user.email!,
-                            style: TextStyle(fontSize: 25),
+                          Expanded(
+                            child: Text(
+                              user.email!,
+                              style: TextStyle(fontSize: 18),
+                            ),
                           ),
                         ],
                       ),

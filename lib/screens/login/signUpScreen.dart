@@ -51,15 +51,8 @@ class SignUpScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 10,
+                  height: 50,
                 ),
-                Text(
-                  "Register here!",
-                  style: TextStyle(fontSize: 22),
-                ),
-                // SizedBox(
-                //   height: 10,
-                // ),
                 Container(
                   //color: Colors.lightBlueAccent,
                   width: 300,
@@ -96,7 +89,6 @@ class SignUpScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 SizedBox(height: 10),
               ],
             ),

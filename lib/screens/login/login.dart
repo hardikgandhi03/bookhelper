@@ -50,19 +50,12 @@ class loginScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 10,
+                  height: 60,
                 ),
-                Text(
-                  "Login here!",
-                  style: TextStyle(fontSize: 22),
-                ),
-                // SizedBox(
-                //   height: 10,
-                // ),
                 Container(
                   //color: Colors.lightBlueAccent,
                   width: 300,
-                  child: Image.asset('assets/images/book1.jpg',
+                  child: Image.asset('assets/images/book_title.jpg',
                       height: MediaQuery.of(context).size.height / 2.7),
                 ),
                 Details(),
