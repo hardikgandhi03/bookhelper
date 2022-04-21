@@ -1,28 +1,41 @@
 import 'package:bookhelper/screens/homescreen.dart';
 import 'package:bookhelper/screens/login/signUpScreen.dart';
+import 'package:bookhelper/verifyemail.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-String email = '';
-String pass = '';
+// String email = '';
+// String pass = '';
 
 class loginScreen extends StatelessWidget {
   //const SignUp({Key? key}) : super(key: key);
   FirebaseAuth authc = FirebaseAuth.instance;
 
+  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController passwordController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     _register() async {
       print(email + pass);
+
       try {
         var usr = await authc.signInWithEmailAndPassword(
-            email: email, password: pass);
+            email: emailController.text.trim(),
+            password: passwordController.text.trim());
         print("hello");
         print(usr);
         print("hello");
 
         if (usr != null) {
+          if (!usr.user!.emailVerified) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => VerifyEmailPage(),
+              ),
+            );
+          }
           //Navigator.pushNamed(context, "login");
           Navigator.push(
             context,
@@ -47,6 +60,7 @@ class loginScreen extends StatelessWidget {
         child: Scaffold(
           backgroundColor: Colors.blue.shade200,
           body: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
                 SizedBox(
@@ -58,7 +72,82 @@ class loginScreen extends StatelessWidget {
                   child: Image.asset('assets/images/book_title.jpg',
                       height: MediaQuery.of(context).size.height / 2.7),
                 ),
-                Details(),
+                // Details(),
+                SizedBox(height: 10),
+                // TextField(
+                //   obscureText: false,
+                //   keyboardType: TextInputType.emailAddress,
+                //   onChanged: (evalue) {
+                //     email = evalue;
+                //   },
+                //   decoration: InputDecoration(
+                //       isDense: true,
+                //       prefixIcon: Padding(
+                //         padding: const EdgeInsets.only(right: 11.0, left: 20),
+                //         child: Icon(Icons.email_outlined),
+                //       ),
+                //       hintText: "Email",
+                //       //hintStyle: GoogleFonts.nunito(color: Colors.grey, fontSize: 21),
+                //       border: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(50))),
+                // ),
+                TextFormField(
+                  autofocus: false,
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return ("Please Enter Your Email");
+                    }
+                    // reg expression for email validation
+                    if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                        .hasMatch(value)) {
+                      return ("Please Enter a valid email");
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    emailController.text = value!;
+                  },
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.mail),
+                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    hintText: "Email",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  obscureText: true,
+                  keyboardType: TextInputType.text,
+                  controller: passwordController,
+                  // onChanged: (pvalue) {
+                  //   pass = pvalue;
+                  // },
+                  // decoration: InputDecoration(
+                  //     isDense: true,
+                  //     prefixIcon: Padding(
+                  //       padding: const EdgeInsets.only(right: 11.0, left: 20),
+                  //       child: Icon(Icons.password),
+                  //     ),
+                  //     hintText: "Password",
+                  //     //hintStyle: GoogleFonts.nunito(color: Colors.grey, fontSize: 21),
+                  //     border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(50)),
+                  //         ),
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.password),
+                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    hintText: "Password",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+
                 SizedBox(height: 50),
                 ElevatedButton(
                   onPressed: _register,
@@ -103,6 +192,7 @@ class Details extends StatelessWidget {
   Details({Key? key}) : super(key: key);
 
   final TextEditingController emailController = new TextEditingController();
+  final TextEditingController passwordController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -111,57 +201,58 @@ class Details extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 10),
-          TextField(
-            obscureText: false,
-            keyboardType: TextInputType.emailAddress,
-            onChanged: (evalue) {
-              email = evalue;
-            },
-            decoration: InputDecoration(
-                isDense: true,
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(right: 11.0, left: 20),
-                  child: Icon(Icons.email_outlined),
-                ),
-                hintText: "Email",
-                //hintStyle: GoogleFonts.nunito(color: Colors.grey, fontSize: 21),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50))),
-          ),
-          // TextFormField(
-          //     autofocus: false,
-          //     controller: emailController,
-          //     keyboardType: TextInputType.emailAddress,
-          //     validator: (value) {
-          //       if (value!.isEmpty) {
-          //         return ("Please Enter Your Email");
-          //       }
-          //       // reg expression for email validation
-          //       if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-          //           .hasMatch(value)) {
-          //         return ("Please Enter a valid email");
-          //       }
-          //       return null;
-          //     },
-          //     onSaved: (value) {
-          //       emailController.text = value!;
-          //     },
-          //     textInputAction: TextInputAction.next,
-          //     decoration: InputDecoration(
-          //       prefixIcon: Icon(Icons.mail),
-          //       contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          //       hintText: "Email",
-          //       border: OutlineInputBorder(
-          //         borderRadius: BorderRadius.circular(10),
+          // TextField(
+          //   obscureText: false,
+          //   keyboardType: TextInputType.emailAddress,
+          //   onChanged: (evalue) {
+          //     email = evalue;
+          //   },
+          //   decoration: InputDecoration(
+          //       isDense: true,
+          //       prefixIcon: Padding(
+          //         padding: const EdgeInsets.only(right: 11.0, left: 20),
+          //         child: Icon(Icons.email_outlined),
           //       ),
-          //     )),
+          //       hintText: "Email",
+          //       //hintStyle: GoogleFonts.nunito(color: Colors.grey, fontSize: 21),
+          //       border: OutlineInputBorder(
+          //           borderRadius: BorderRadius.circular(50))),
+          // ),
+          TextFormField(
+              autofocus: false,
+              controller: emailController,
+              keyboardType: TextInputType.emailAddress,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return ("Please Enter Your Email");
+                }
+                // reg expression for email validation
+                if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                    .hasMatch(value)) {
+                  return ("Please Enter a valid email");
+                }
+                return null;
+              },
+              onSaved: (value) {
+                emailController.text = value!;
+              },
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.mail),
+                contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                hintText: "Email",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              )),
           SizedBox(height: 10),
           TextField(
             obscureText: true,
             keyboardType: TextInputType.text,
-            onChanged: (pvalue) {
-              pass = pvalue;
-            },
+            controller: passwordController,
+            // onChanged: (pvalue) {
+            //   pass = pvalue;
+            // },
             decoration: InputDecoration(
                 isDense: true,
                 prefixIcon: Padding(
@@ -175,29 +266,6 @@ class Details extends StatelessWidget {
           ),
           SizedBox(height: 10),
         ],
-      ),
-    );
-  }
-}
-
-class Option extends StatelessWidget {
-  //const Option({ Key? key }) : super(key: key);
-  Option({required this.icon});
-  Icon icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      borderRadius: BorderRadius.circular(50),
-      child: Container(
-        height: 75,
-        width: 75,
-        decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: icon,
       ),
     );
   }

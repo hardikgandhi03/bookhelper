@@ -10,12 +10,6 @@ class profileScreen extends StatefulWidget {
 }
 
 class _profileScreenState extends State<profileScreen> {
-  Future<void> logout(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => loginScreen()));
-  }
-
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
@@ -102,6 +96,9 @@ class _profileScreenState extends State<profileScreen> {
 
   Future _signOut() async {
     await FirebaseAuth.instance.signOut();
-    return loginScreen();
+    //Navigator.pop(context);
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => new loginScreen()));
+    // return new loginScreen();
   }
 }

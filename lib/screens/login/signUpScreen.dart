@@ -1,4 +1,5 @@
 import 'package:bookhelper/screens/homescreen.dart';
+import 'package:bookhelper/verifyemail.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,25 +12,40 @@ class SignUpScreen extends StatelessWidget {
   // SignUpScreen({Key? key}) : super(key: key);
 
   FirebaseAuth authc = FirebaseAuth.instance;
+  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController passwordController = new TextEditingController();
+  final TextEditingController confirmpasswordController =
+      new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     _register() async {
-      print(email + "\n" + cpass + "\n" + pass);
+      print(emailController.text +
+          "\n" +
+          passwordController.text +
+          "\n" +
+          confirmpasswordController.text);
       try {
-        if (pass != cpass) {
+        if (passwordController.text != confirmpasswordController.text) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text("Password not mached.")));
         } else {
           var user = await authc.createUserWithEmailAndPassword(
-            email: email,
-            password: pass,
+            email: emailController.text.trim(),
+            password: passwordController.text.trim(),
           );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => Home()),
+          // );
+          print(user);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Home()),
+            MaterialPageRoute(
+              builder: (context) => VerifyEmailPage(),
+            ),
           );
-          print(user);
+          //return VerifyEmailPage();
         }
       } catch (e) {
         final snack = SnackBar(
@@ -48,6 +64,7 @@ class SignUpScreen extends StatelessWidget {
         child: Scaffold(
           backgroundColor: Colors.blue.shade200,
           body: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
                 SizedBox(
@@ -59,7 +76,63 @@ class SignUpScreen extends StatelessWidget {
                   child: Image.asset('assets/images/book1.jpg',
                       height: MediaQuery.of(context).size.height / 2.7),
                 ),
-                Details(),
+                //Details(),
+                TextFormField(
+                  autofocus: false,
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return ("Please Enter Your Email");
+                    }
+                    // reg expression for email validation
+                    if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                        .hasMatch(value)) {
+                      return ("Please Enter a valid email");
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    emailController.text = value!;
+                  },
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.mail),
+                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    hintText: "Email",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  obscureText: true,
+                  keyboardType: TextInputType.text,
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.password),
+                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    hintText: "Password",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  obscureText: true,
+                  keyboardType: TextInputType.text,
+                  controller: confirmpasswordController,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.password),
+                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    hintText: "Confirm Password",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
                 SizedBox(height: 50),
                 ElevatedButton(
                   onPressed: _register,
@@ -94,100 +167,6 @@ class SignUpScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class Details extends StatelessWidget {
-  const Details({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        children: [
-          SizedBox(height: 10),
-          TextField(
-            obscureText: false,
-            keyboardType: TextInputType.emailAddress,
-            onChanged: (evalue) {
-              email = evalue;
-            },
-            decoration: InputDecoration(
-                isDense: true,
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(right: 11.0, left: 20),
-                  child: Icon(Icons.email_outlined),
-                ),
-                hintText: "Email",
-                //hintStyle: GoogleFonts.nunito(color: Colors.grey, fontSize: 21),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50))),
-          ),
-          SizedBox(height: 10),
-          TextField(
-            obscureText: true,
-            keyboardType: TextInputType.text,
-            onChanged: (pval) {
-              pass = pval;
-            },
-            decoration: InputDecoration(
-                isDense: true,
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(right: 11.0, left: 20),
-                  child: Icon(Icons.password),
-                ),
-                hintText: "Password",
-                //hintStyle: GoogleFonts.nunito(color: Colors.grey, fontSize: 21),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50))),
-          ),
-          SizedBox(height: 10),
-          TextField(
-            obscureText: true,
-            keyboardType: TextInputType.text,
-            onChanged: (cpval) {
-              cpass = cpval;
-            },
-            decoration: InputDecoration(
-                isDense: true,
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(right: 11.0, left: 20),
-                  child: Icon(Icons.password),
-                ),
-                hintText: "Confirm Password",
-                //  hintStyle: GoogleFonts.nunito(color: Colors.grey, fontSize: 21),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50))),
-          ),
-          SizedBox(height: 10),
-        ],
-      ),
-    );
-  }
-}
-
-class Option extends StatelessWidget {
-  //const Option({ Key? key }) : super(key: key);
-
-  Option({required this.icon});
-  Icon icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      borderRadius: BorderRadius.circular(50),
-      child: Container(
-        height: 75,
-        width: 75,
-        decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: icon,
       ),
     );
   }

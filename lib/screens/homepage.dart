@@ -1,3 +1,4 @@
+import 'package:bookhelper/futureupdate.dart';
 import 'package:bookhelper/screens/booklist.dart';
 import 'package:bookhelper/screens/currentlyreading.dart';
 import 'package:flutter/material.dart';
@@ -69,12 +70,12 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => CurrentlyReading(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FutureUpdate(),
+                ),
+              );
             },
           ),
           GestureDetector(
@@ -129,7 +130,12 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             onTap: () {
-              print("Container 2 tapped");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FutureUpdate(),
+                ),
+              );
             },
           ),
           GestureDetector(
@@ -184,7 +190,12 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             onTap: () {
-              print("Container 3 tapped");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FutureUpdate(),
+                ),
+              );
             },
           ),
         ],
